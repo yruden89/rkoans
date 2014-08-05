@@ -18,11 +18,7 @@ class AboutArrays < Neo::Koan
     assert_equal [1, 2], array
 
     array << 333
-<<<<<<< HEAD
-    assert_equal [1,2,333], array
-=======
     assert_equal [1, 2, 333], array
->>>>>>> about_arrays, about_array_assignment, about_hashes, about_strings
   end
 
   def test_accessing_array_elements
