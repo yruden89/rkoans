@@ -30,7 +30,34 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
-  # You need to write this method
+  def deleteTriple(arr, deletedEl)
+    i = 0
+    arr.reject! do |el|
+      isRejected = el == deletedEl && i < 3
+      i+=1 if isRejected
+      isRejected
+    end
+  end
+
+
+  score = 0
+  if dice.count(1) >= 3
+    score += 1000
+    deleteTriple dice, 1
+  else
+    for i in 2..6
+      if dice.count(i) >= 3
+        score += i*100
+        deleteTriple dice, i
+        break
+      end
+    end
+  end
+  onesCount = dice.count 1
+  score += onesCount * 100
+  fivesCount = dice.count 5
+  score += fivesCount * 50
+  score
 end
 
 class AboutScoringProject < Neo::Koan
