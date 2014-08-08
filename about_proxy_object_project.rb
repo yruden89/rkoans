@@ -5,7 +5,7 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # In this assignment, create a proxy class (one is started for you
 # below).  You should be able to initialize the proxy object with any
 # object.  Any messages sent to the proxy object should be forwarded
-# to the target object.  As each message is sent, the proxy should
+# to the target object.  As each message is sent, the proxy shoulld
 # record the name of the method sent.
 #
 # The proxy class is started for you.  You will need to add a method
@@ -15,10 +15,29 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 class Proxy
   def initialize(target_object)
     @object = target_object
-    # ADD MORE CODE HERE
+    @called = []
   end
 
-  # WRITE CODE HERE
+  def called?(methodName)
+    @called.count(methodName) > 0
+  end
+
+  def number_of_times_called(methodName)
+    @called.count(methodName)
+  end
+
+  def method_missing(symbol, *args, &block)
+    if(@object.respond_to? symbol)
+      @called << symbol
+      @object.send symbol, *args, &block
+    else
+      super(symbol, *args, &block)
+    end
+  end
+
+  def messages
+    @called
+  end
 end
 
 # The proxy object should pass the following Koan:
